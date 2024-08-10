@@ -2,12 +2,12 @@
   "name": "suitescript_conversion_project_node",
   "version": "1.0.0",
   "description": "Nodejs for suitescript 1.0 API to 2.1 API",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Nagendra Babu",
   "license": "ISC",
   "dependencies": {
     "ejs": "^3.1.10",
