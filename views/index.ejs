@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SuiteScript 1.0 to 2.1 Converter</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Convert SuiteScript 1.0 to 2.1</h1>
+        <form action="/convert" method="POST">
+            <input type="text" name="script" placeholder="Paste your SuiteScript 1.0 code here..." required>
+            <button type="submit">Convert</button>
+        </form>
+        
+        <!-- Help Section -->
+        <div class="help-section">
+            <h2>Help</h2>
+            <p>Welcome to the SuiteScript 1.0 to 2.1 Converter! This tool helps you convert SuiteScript 1.0 code to SuiteScript 2.1.</p>
+            <p><strong>How to Use:</strong></p>
+            <ol>
+                <li>Paste your SuiteScript 1.0 code into the text field above.</li>
+                <li>Click the "Convert" button.</li>
+                <li>The converted SuiteScript 2.1 code will appear below.</li>
+            </ol>
+            <p><strong>Example:</strong></p>
+            <pre><code>nlapiLogExecution('DEBUG', 'Log Title', 'Log details');
+            
+            // Converts to:
+            log.debug({title: 'Log Title', details: 'Log details'});</code></pre>
+        </div>
+
+        <% if (noConversionMessage) { %>
+            <div class="error-message">
+                <p><%= noConversionMessage %></p>
+            </div>
+        <% } %>
+        <% if (convertedScript) { %>
+            <div class="output-container">
+                <h2>Converted Script:</h2>
+                <pre><code><%= convertedScript %></code></pre>
+            </div>
+        <% } %>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Retrieve data from a JSON script
+            const scriptData = JSON.parse('<%= JSON.stringify({ hasConvertedScript: convertedScript ? true : false }) %>');
+
+            // Check if there is no conversion message and clear output if needed
+            if (!scriptData.hasConvertedScript) {
+                const outputContainer = document.querySelector('.output-container');
+                if (outputContainer) {
+                    outputContainer.innerHTML = '';
+                }
+            }
+        });
+    </script>
+    <% if (noConversionMessage) { %>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                // Escape single quotes and newlines
+                const message = `<%= noConversionMessage.replace(/'/g, "\\'").replace(/\n/g, '\\n') %>`;
+                alert(message);
+            });
+        </script>
+    <% } %>
+</body>
+</html>
